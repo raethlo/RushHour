@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace RushHour
 {
-    class Map
+    class Solver
     {
-        //fields
-        List<Car> cars;
-        char[][] map;
-
-        public int Dimension { get; set; }
-        
     }
 }
