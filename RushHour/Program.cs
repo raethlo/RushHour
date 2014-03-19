@@ -34,7 +34,30 @@ namespace RushHour
             Console.WriteLine();
             foreach (var car in g.Cars)
             {
-                g.CanMove(car, Direction.Right);   
+                Console.Write("Car {0}: ", car.Color);
+                switch (car.Orientation)
+                {
+                    case Orientation.Vertical:
+                        Console.WriteLine("\t can move {0} to {1}", g.CanMove(car, Direction.Down), Direction.Down.ToString());
+                        Console.WriteLine("\t can move {0} to {1}", g.CanMove(car, Direction.Up), Direction.Up.ToString());                                           
+                        break;
+                    case Orientation.Horizontal:
+                        Console.WriteLine("\t can move {0} to {1}",g.CanMove(car, Direction.Right),Direction.Right.ToString());
+                        Console.WriteLine("\t can move {0} to {1}", g.CanMove(car, Direction.Left), Direction.Left.ToString());
+                        try
+                        {
+                            Console.WriteLine("\t can move {0} to {1}", g.CanMove(car, Direction.Up), Direction.Up.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                 
             }
 
 
