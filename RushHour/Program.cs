@@ -41,6 +41,10 @@ namespace RushHour
                  
             }
 
+            System.Console.WriteLine("INITIAL!");
+            g.PrintGrid();
+            System.Console.WriteLine("___________________");
+
             foreach (TrafficGrid t in g.GeneratePossibleMoves())
             {
                 System.Console.WriteLine();

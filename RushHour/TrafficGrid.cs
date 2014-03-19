@@ -59,7 +59,7 @@ namespace RushHour
             }
             this.Dimension = g.Dimension;
             this.Occupancy = this.Occupancy = new bool[g.Dimension, g.Dimension];
-            genOccupancy();
+            this.genOccupancy();
         }
 
         public void LoadGridFromFile(string filename)
@@ -127,7 +127,7 @@ namespace RushHour
                             return i;
 
                         case Direction.Right:
-                            while (((car.X + i + car.Length) < this.Dimension) && !this.Occupancy[car.X + i + car.Length , car.Y])
+                            while (((car.X + i + car.Length) < this.Dimension) && !this.Occupancy[car.X + i + car.Length  , car.Y])
                             {
                                 ++i;
                             }
@@ -159,16 +159,16 @@ namespace RushHour
                         case Direction.Up:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                this.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;
-                                this.Occupancy[actualCar.X, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;
+                                result.Occupancy[actualCar.X, actualCar.Y + i] = false;
                             }
                             newY -= distance;
                             break;
                         case Direction.Down:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                this.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
-                                this.Occupancy[actualCar.X, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
+                                result.Occupancy[actualCar.X, actualCar.Y + i] = false;
                             }
                             newY += distance;
                             break;
@@ -182,16 +182,16 @@ namespace RushHour
                         case Direction.Left:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                this.Occupancy[actualCar.X -distance, actualCar.Y] = true;
-                                this.Occupancy[actualCar.X, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X -distance + i, actualCar.Y] = true;
+                                result.Occupancy[actualCar.X + i, actualCar.Y] = false;
                             }
                             newX -= distance;
                             break;
                         case Direction.Right:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                this.Occupancy[actualCar.X + distance, actualCar.Y] = true;
-                                this.Occupancy[actualCar.X, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;
+                                result.Occupancy[actualCar.X+i, actualCar.Y] = false;
                             }
                             newX +=distance;
                             break;
@@ -276,7 +276,7 @@ namespace RushHour
                     case Orientation.Horizontal:
                         foreach (var dir in horiz)
                         {
-                            int canGo = CanMove(car, dir); ;
+                            int canGo = this.CanMove(car, dir);
                             for (int i = 1; i <= canGo; i++)
                             {
                                 result.Add(Move(car, dir, i));
