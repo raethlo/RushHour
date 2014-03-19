@@ -41,25 +41,26 @@ namespace RushHour
                  
             }
 
+            foreach (TrafficGrid t in g.GeneratePossibleMoves())
+            {
+                System.Console.WriteLine();
+                t.PrintGrid();
+                System.Console.WriteLine();
+            }
 
-            System.Console.WriteLine();
-            System.Console.WriteLine("BEFORE \n");
-            g.PrintGrid();
-
-            TrafficGrid g2 = new TrafficGrid(g);
-         
-            g2.Move(g2.Cars.Find(c => c.Color == 'r'), Direction.Right, 2); 
-            
-            System.Console.WriteLine("\n AFTER parent grid\n");
-            g.PrintGrid();
-
-            System.Console.WriteLine("\n AFTER child grid\n");
-            g2.PrintGrid();
+            //System.Console.WriteLine();
+            //System.Console.WriteLine("BEFORE \n");
+            //g.PrintGrid();
 
             //System.Console.WriteLine();
 
-            //g.Move(g.Cars.Find(c => c.Color == 'b'), Direction.Down, 2);
+            //var g2 = g.Move(g.Cars.Find(c => c.Color == 'r'), Direction.Right, 2);
+
+            //System.Console.WriteLine("\nParent \n");
             //g.PrintGrid();
+
+            //System.Console.WriteLine("\n Child \n");
+            //g2.PrintGrid();
 
             //State s = new State();
             //s.Traffic = g;
