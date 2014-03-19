@@ -97,21 +97,22 @@ namespace RushHour
         //if car orientation doesnt permit moving in dir an exception is thrown
         public int CanMove(Car car, Direction dir)
         {
-            int i = 1;
+            int i = 0;
             switch (car.Orientation)
             {
                 case Orientation.Vertical:
                     switch (dir)
                     {
                         case Direction.Up:
-                            while (((car.Y - i) >= 0) && !this.Occupancy[car.X, car.Y - i])
+                            while (((car.Y - i - 1) >= 0) && !this.Occupancy[car.X, car.Y - i -1])
                                 ++i;
-                            return i - 1;
+                            return i;
 
                         case Direction.Down:
-                            while (((car.Y + i + car.Length) < this.Dimension) && !this.Occupancy[car.X, car.Y + i + car.Length])
+                            while (((car.Y + i + car.Length) < this.Dimension) && !this.Occupancy[car.X, car.Y + i + car.Length ])
                                 ++i;
-                            return i - 1;
+                            //has to return i because car or account car.Length -1
+                            return i;
 
                         default:
                             string msg = String.Format("Orientation {0} doesn't allow moving {1}", car.Orientation.ToString(), dir.ToString());
@@ -121,16 +122,16 @@ namespace RushHour
                     switch (dir)
                     {
                         case Direction.Left:
-                            while (((car.X - i) >= 0) && !this.Occupancy[car.X - i, car.Y])
+                            while (((car.X - i - 1) >= 0) && !this.Occupancy[car.X - i - 1, car.Y])
                                 ++i;
-                            return i - 1;
+                            return i;
 
                         case Direction.Right:
-                            while (((car.X + i + car.Length) < this.Dimension) && !this.Occupancy[car.X + i + car.Length, car.Y])
+                            while (((car.X + i + car.Length) < this.Dimension) && !this.Occupancy[car.X + i + car.Length , car.Y])
                             {
                                 ++i;
                             }
-                            return i - 1;
+                            return i;
 
                         default:
                             string msg = String.Format("Orientation {0} doesn't allow moving {1}", car.Orientation.ToString(), dir.ToString());
