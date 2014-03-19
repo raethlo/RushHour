@@ -62,9 +62,9 @@ namespace RushHour
 
 
             System.Console.WriteLine();
-            g.PrintGrid();
+            
             g.Move(g.Cars.Find(c => c.Color == 'r'),Direction.Right,2);
-
+            g.PrintGrid();
             System.Console.ReadLine();
 
            
