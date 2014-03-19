@@ -16,7 +16,7 @@ namespace RushHour
     {
         //fields
         public List<Car> Cars { get; set; }
-        public Car Red { get; private set; }
+        //public Car Red { get; private set; }
         public bool[,] Occupancy { get; set; }
         public int Dimension { get; set; }
 
@@ -25,19 +25,41 @@ namespace RushHour
             this.Cars = new List<Car>();
         }
 
-        public TrafficGrid(int dim)
-        {
-            this.Cars = new List<Car>();
-            this.Dimension = dim;
-            this.Occupancy = new bool[dim, dim];
-        }
-
         public TrafficGrid(List<Car> cars, int dim)
         {
             this.Cars = new List<Car>();
+            foreach (var car in cars)
+            {
+                var c = new Car();
+                c.Orientation = car.Orientation;
+                c.Length = car.Length;
+                c.X = car.X;
+                c.Y = car.Y;
+                c.Color = car.Color;
+                this.Cars.Add(c);
+            }
+
             this.Dimension = dim;
             this.Occupancy = new bool[dim, dim];
             this.genOccupancy();
+        }
+
+        public TrafficGrid(TrafficGrid g)
+        {
+            this.Cars = new List<Car>();
+            foreach (var car in g.Cars)
+            {
+                var c = new Car();
+                c.Orientation = car.Orientation;
+                c.Length = car.Length;
+                c.X = car.X;
+                c.Y = car.Y;
+                c.Color = car.Color;
+                this.Cars.Add(c);
+            }
+            this.Dimension = g.Dimension;
+            this.Occupancy = this.Occupancy = new bool[g.Dimension, g.Dimension];
+            genOccupancy();
         }
 
         public void LoadGridFromFile(string filename)
@@ -121,9 +143,10 @@ namespace RushHour
 
         public void Move(Car car, Direction direction, int distance)
         {
-            //maybe add CanMove check if distance <= canmove
-            // if(CanMove(car)<distance) throw Exception
-            int newX = 0, newY = 0;
+
+            if (CanMove(car,direction) < distance) throw new Exception("Cant move that far");
+            
+            int newX = car.X, newY = car.Y;
 
             switch (car.Orientation)
             {
@@ -136,7 +159,7 @@ namespace RushHour
                                 this.Occupancy[car.X, car.Y - distance + i] = true;
                                 this.Occupancy[car.X, car.Y] = false;
                             }
-                            newY = car.Y - distance;
+                            newY -= distance;
                             break;
                         case Direction.Down:
                             for (int i = 0; i < car.Length; i++)
@@ -144,12 +167,11 @@ namespace RushHour
                                 this.Occupancy[car.X, car.Y + distance + i] = true;
                                 this.Occupancy[car.X, car.Y] = false;
                             }
-                            newY = car.Y + distance;
+                            newY += distance;
                             break;
                         default:
                             break;
                     }
-                    newX = car.X;
                     break;
                 case Orientation.Horizontal:
                     switch (direction)
@@ -160,7 +182,7 @@ namespace RushHour
                                 this.Occupancy[car.X -distance, car.Y] = true;
                                 this.Occupancy[car.X, car.Y] = false;
                             }
-                            newX = car.X - distance;
+                            newX -= distance;
                             break;
                         case Direction.Right:
                             for (int i = 0; i < car.Length; i++)
@@ -168,12 +190,11 @@ namespace RushHour
                                 this.Occupancy[car.X + distance, car.Y] = true;
                                 this.Occupancy[car.X, car.Y] = false;
                             }
-                            newX = car.X + distance;
+                            newX +=distance;
                             break;
                         default:
                             break;
                     }
-                    newY = car.Y;
                     break;
                 default:
                     break;
@@ -224,6 +245,42 @@ namespace RushHour
                 }
                 Console.WriteLine();
             }
+        }
+
+        public List<TrafficGrid> GeneratePossibleMoves()
+        {
+
+            List<TrafficGrid> result = new List<TrafficGrid>();
+            Direction[] vert = { Direction.Up, Direction.Down };
+            Direction[] horiz = { Direction.Left, Direction.Right };
+
+            foreach(var car in this.Cars)
+            {
+                switch (car.Orientation)
+	            {
+		            case Orientation.Vertical:
+                        foreach (var dir in vert)
+                        {
+                            int canGo = this.CanMove(car, dir);
+                            for (int i = 1; i <= canGo; i++)
+                            {
+                                TrafficGrid g = this;
+                                g.Move(car, dir, i);
+                                result.Add(g);
+                            }
+                        }
+                        break;
+                    case Orientation.Horizontal:
+                        foreach (var dir in horiz)
+	                    {
+		                    
+	                    }
+                        break;
+                    default:
+                        break;
+	            }
+            }
+            throw new NotImplementedException();
         }
 
         private void genOccupancy()

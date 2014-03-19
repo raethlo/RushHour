@@ -12,26 +12,7 @@ namespace RushHour
         {
             TrafficGrid g = new TrafficGrid();
             g.LoadGridFromFile("../../Resources/0.txt");
-
-            TimeSpan t = new TimeSpan(0, 0, 0, 0, int.MaxValue);
-            Console.WriteLine(t.TotalDays);
-
-            foreach(var car in g.Cars)
-            {
-                System.Console.WriteLine("{0} {1} {2}",car.X,car.Y,car.Color);
-            }
-
-            System.Console.WriteLine();
-
-            for (int i = 0; i < g.Dimension; i++)
-            {
-                for (int j = 0; j < g.Dimension; j++)
-                {
-                    Console.Write(g.Occupancy[j,i]); 
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
+            
             foreach (var car in g.Cars)
             {
                 Console.Write("Car {0}: ", car.Color);
@@ -62,12 +43,32 @@ namespace RushHour
 
 
             System.Console.WriteLine();
-            
-            g.Move(g.Cars.Find(c => c.Color == 'r'),Direction.Right,2);
+            System.Console.WriteLine("BEFORE \n");
             g.PrintGrid();
 
-            State s = new State();
-            s.Traffic = g;
+            TrafficGrid g2 = new TrafficGrid(g);
+         
+            g2.Move(g2.Cars.Find(c => c.Color == 'r'), Direction.Right, 2); 
+            
+            System.Console.WriteLine("\n AFTER parent grid\n");
+            g.PrintGrid();
+
+            System.Console.WriteLine("\n AFTER child grid\n");
+            g2.PrintGrid();
+
+            //System.Console.WriteLine();
+
+            //g.Move(g.Cars.Find(c => c.Color == 'b'), Direction.Down, 2);
+            //g.PrintGrid();
+
+            //State s = new State();
+            //s.Traffic = g;
+            //s.Parent = null;
+
+            //if (s.IsFinal())
+            //    Console.WriteLine("this state is final");
+            //else
+            //    Console.WriteLine("not final");
 
             System.Console.ReadLine();
 
