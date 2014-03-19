@@ -34,7 +34,7 @@ namespace RushHour
             Console.WriteLine();
             foreach (var car in g.Cars)
             {
-                g.CanMove(car, Direction.Left);   
+                g.CanMove(car, Direction.Right);   
             }
 
 
