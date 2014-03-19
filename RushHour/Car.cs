@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RushHour
 {
+    
 
     public enum Orientation
     {
@@ -13,6 +14,8 @@ namespace RushHour
 
     public class Car
     {
+        public const char red = 'r';
+
         public Orientation Orientation { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -22,7 +25,7 @@ namespace RushHour
 
         public bool IsRed()
         {
-            return this.Color.Equals('r');
+            return this.Color.Equals(Car.red);
         }
 
     }

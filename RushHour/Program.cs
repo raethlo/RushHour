@@ -10,7 +10,7 @@ namespace RushHour
     {
         static void Main(string[] args)
         {
-            Grid g = new Grid();
+            TrafficGrid g = new TrafficGrid();
             g.LoadGridFromFile("../../Resources/0.txt");
 
             TimeSpan t = new TimeSpan(0, 0, 0, 0, int.MaxValue);
@@ -65,6 +65,10 @@ namespace RushHour
             
             g.Move(g.Cars.Find(c => c.Color == 'r'),Direction.Right,2);
             g.PrintGrid();
+
+            State s = new State();
+            s.Traffic = g;
+
             System.Console.ReadLine();
 
            
