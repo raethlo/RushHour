@@ -111,7 +111,7 @@ namespace RushHour
                         case Direction.Down:
                             while (((car.Y + i + car.Length) < this.Dimension) && !this.Occupancy[car.X, car.Y + i + car.Length ])
                                 ++i;
-                            //has to return i because car or account car.Length -1
+                            
                             return i;
 
                         default:
