@@ -55,6 +55,8 @@
     <Content Include="Resources\0.txt" />
     <Content Include="Resources\1.txt" />
     <Content Include="Resources\2.txt" />
+    <Content Include="Resources\3.txt" />
+    <Content Include="Resources\4.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
