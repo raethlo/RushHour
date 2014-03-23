@@ -252,6 +252,52 @@ namespace RushHour
             }
         }
 
+        public string ToString()
+        {
+            char[,] map = new char[this.Dimension, this.Dimension];
+            StringBuilder strb = new StringBuilder();
+
+            for (int i = 0; i < this.Dimension; i++)
+            {
+                for (int j = 0; j < this.Dimension; j++)
+                {
+                    map[j, i] = '0';
+                }
+            }
+
+            foreach (var car in this.Cars)
+            {
+                switch (car.Orientation)
+                {
+                    case Orientation.Vertical:
+                        for (int i = 0; i < car.Length; i++)
+                        {
+                            map[car.X, car.Y + i] = car.Color;
+                        }
+                        break;
+                    case Orientation.Horizontal:
+                        for (int i = 0; i < car.Length; i++)
+                        {
+                            map[car.X + i, car.Y] = car.Color;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            for (int i = 0; i < this.Dimension; i++)
+            {
+                for (int j = 0; j < this.Dimension; j++)
+                {
+                    strb.Append(map[j, i]);
+                }
+            }
+
+            return strb.ToString();
+
+        }
+
         public List<TrafficGrid> GeneratePossibleMoves()
         {
 

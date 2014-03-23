@@ -21,7 +21,8 @@ namespace RushHour
                 if (tested.IsFinal())
                 {
                     System.Console.WriteLine("WE found a solution! YES! it goes like this");
-                    State.PrintRoute(tested);
+                    int steps = State.PrintRoute(tested);
+                    System.Console.WriteLine("actually in {0} steps",steps);
                     return;
                 }
                 else
@@ -36,9 +37,40 @@ namespace RushHour
             System.Console.WriteLine("Dang...unsolvable");
         }
 
+        //add set
         public void DFSolve(State entry)
         {
+            Stack<State> stateStack = new Stack<State>();
+            Dictionary<string,State> setOfStates = new Dictionary<string,State>();
+            //if(entry.Parent!=null)
+            //    throw new Exception()
+            stateStack.Push(entry);
 
+            while (stateStack.Count > 0)
+            {
+                State tested = stateStack.Pop();
+                if (tested.IsFinal())
+                {
+                    System.Console.WriteLine("WE found a solution! YES! it goes like this");
+                    int steps = State.PrintRoute(tested);
+                    System.Console.WriteLine("actually in {0} steps", steps);
+                    return;
+                }
+                else
+                {
+                    foreach (var state in tested.GenerateChildStates())
+                    {
+                        if (!setOfStates.ContainsKey(state.Traffic.ToString()))
+                        {
+                            stateStack.Push(state);
+                            setOfStates.Add(state.Traffic.ToString(), state);
+                        }
+                            
+                    }
+                }
+            }
+
+            System.Console.WriteLine("Dang...unsolvable");
         }
     }
 }

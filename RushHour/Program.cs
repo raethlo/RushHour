@@ -29,7 +29,7 @@ namespace RushHour
             entry.Parent = null;
 
             Solver solver= new Solver();
-            solver.BFSolve(entry);
+            solver.DFSolve(entry);
 
             //foreach (var state in s.GenerateChildStates())
             //{
@@ -43,9 +43,15 @@ namespace RushHour
 
             //if (isSameParent)
             //    Console.WriteLine("\n the paret works");
+            System.Console.WriteLine( "Traffiiiiic \n" + entry.Traffic.ToString());
+
 
             System.Console.ReadLine();
+
+            
         }
+
+        
 
         
     }
