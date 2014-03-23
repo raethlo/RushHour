@@ -17,7 +17,7 @@ namespace RushHour
 
             try 
 	        {	        
-		        entry.Traffic.LoadGridFromFile("../../Resources/0.txt");
+		        entry.Traffic.LoadGridFromFile("../../Resources/1.txt");
 	        }
 	        catch (Exception ex)
 	        {
@@ -27,24 +27,17 @@ namespace RushHour
 	        }
 
             entry.Parent = null;
-
-            Solver solver= new Solver();
-            solver.DFSolve(entry);
-
-            //foreach (var state in s.GenerateChildStates())
-            //{
-            //    if (state.Parent != s)
-            //        isSameParent = false;
-            //    Console.WriteLine("\nPARENT\n");
-            //    state.Parent.Traffic.PrintGrid();
-            //    Console.WriteLine("\nchild\n");
-            //    state.Traffic.PrintGrid();
-            //}
+            Console.WriteLine("STARTING FROM");
+            entry.Traffic.PrintGrid();
+            Console.WriteLine("_______________________________\n");
+            Solver solver = new Solver();
+            solver.BFSolve(entry);
+            solver.BFSolve(entry, "./output.txt");
 
             //if (isSameParent)
             //    Console.WriteLine("\n the paret works");
-            System.Console.WriteLine( "Traffiiiiic \n" + entry.Traffic.ToString());
-
+           // System.Console.WriteLine( "Traffiiiiic \n" + entry.Traffic.ToString());
+           
 
             System.Console.ReadLine();
 

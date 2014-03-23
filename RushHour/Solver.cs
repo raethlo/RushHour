@@ -11,6 +11,7 @@ namespace RushHour
         public void BFSolve(State entry)
         {
             Queue<State> stateQueue = new Queue<State>();
+            Dictionary<string, State> setOfStates = new Dictionary<string, State>();
             //if(entry.Parent!=null)
             //    throw new Exception()
             stateQueue.Enqueue(entry);
@@ -29,7 +30,44 @@ namespace RushHour
                 {
                     foreach (var state in tested.GenerateChildStates())
                     {
-                        stateQueue.Enqueue(state);
+                        if (!setOfStates.ContainsKey(state.Traffic.ToString()))
+                        {
+                            stateQueue.Enqueue(state);
+                            setOfStates.Add(state.Traffic.ToString(), state);
+                        }
+                    }
+                }
+            }
+
+            System.Console.WriteLine("Dang...unsolvable");
+        }
+
+        public void BFSolve(State entry,string path)
+        {
+            Queue<State> stateQueue = new Queue<State>();
+            Dictionary<string, State> setOfStates = new Dictionary<string, State>();
+            //if(entry.Parent!=null)
+            //    throw new Exception()
+            stateQueue.Enqueue(entry);
+
+            while (stateQueue.Count > 0)
+            {
+                State tested = stateQueue.Dequeue();
+                if (tested.IsFinal())
+                {
+                    System.Console.WriteLine("WE found a solution! YES! look to the otput file for more info");
+                    State.PrintReverseRouteToFile(tested,path);
+                    return;
+                }
+                else
+                {
+                    foreach (var state in tested.GenerateChildStates())
+                    {
+                        if (!setOfStates.ContainsKey(state.Traffic.ToString()))
+                        {
+                            stateQueue.Enqueue(state);
+                            setOfStates.Add(state.Traffic.ToString(), state);
+                        }
                     }
                 }
             }

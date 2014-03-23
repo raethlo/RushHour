@@ -19,6 +19,7 @@ namespace RushHour
         //public Car Red { get; private set; }
         public bool[,] Occupancy { get; set; }
         public int Dimension { get; set; }
+        public string Message { get; set; }
 
         public TrafficGrid()
         {
@@ -159,16 +160,26 @@ namespace RushHour
                         case Direction.Up:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;
                                 result.Occupancy[actualCar.X, actualCar.Y + i] = false;
+                                //result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;                                
+                            }
+                            for (int i = 0; i < actualCar.Length; i++)
+                            {
+                                //result.Occupancy[actualCar.X, actualCar.Y + i] = false;
+                                result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;
                             }
                             newY -= distance;
                             break;
                         case Direction.Down:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
                                 result.Occupancy[actualCar.X, actualCar.Y + i] = false;
+                                //result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
+                            }
+                            for (int i = 0; i < actualCar.Length; i++)
+                            {
+                                //result.Occupancy[actualCar.X, actualCar.Y + i] = false;
+                                result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
                             }
                             newY += distance;
                             break;
@@ -182,16 +193,26 @@ namespace RushHour
                         case Direction.Left:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X -distance + i, actualCar.Y] = true;
                                 result.Occupancy[actualCar.X + i, actualCar.Y] = false;
+                                //result.Occupancy[actualCar.X -distance + i, actualCar.Y] = true;                               
+                            }
+                            for (int i = 0; i < actualCar.Length; i++)
+                            {
+                                //result.Occupancy[actualCar.X + i, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X - distance + i, actualCar.Y] = true;
                             }
                             newX -= distance;
                             break;
                         case Direction.Right:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;
                                 result.Occupancy[actualCar.X+i, actualCar.Y] = false;
+                                //result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;                           
+                            }
+                            for (int i = 0; i < actualCar.Length; i++)
+                            {
+                                //result.Occupancy[actualCar.X + i, actualCar.Y] = false;
+                                result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;
                             }
                             newX +=distance;
                             break;
@@ -209,8 +230,9 @@ namespace RushHour
             return result;
         }
 
-        public void PrintGrid()
+        public string PrintGrid()
         {
+            StringBuilder strb = new StringBuilder();
             char[,] map = new char[this.Dimension, this.Dimension];
 
             for (int i = 0; i < this.Dimension; i++)
@@ -242,14 +264,16 @@ namespace RushHour
                 }
             }
 
+            strb.AppendLine(this.Message);
             for (int i = 0; i < this.Dimension; ++i)
             {
                 for (int j = 0; j < this.Dimension; ++j)
                 {
-                    Console.Write(map[j, i]);
+                    strb.Append(map[j, i]);
                 }
-                Console.WriteLine();
+                strb.Append('\n');
             }
+            return strb.ToString();
         }
 
         public string ToString()
@@ -314,8 +338,10 @@ namespace RushHour
                         {
                             int canGo = CanMove(car, dir);;
                             for (int i = 1; i <= canGo; i++)
-                            {                              
-                                result.Add(Move(car, dir, i));
+                            {
+                                TrafficGrid g = Move(car, dir, i);
+                                g.Message = String.Format("Moved car: {0} => {1} to {2}", car.Color, i, dir.ToString());
+                                result.Add(g);
                             }
                         }
                         break;
@@ -325,7 +351,9 @@ namespace RushHour
                             int canGo = this.CanMove(car, dir);
                             for (int i = 1; i <= canGo; i++)
                             {
-                                result.Add(Move(car, dir, i));
+                                TrafficGrid g = Move(car, dir, i);
+                                g.Message = String.Format("Moved car: {0} => {1} to {2}",car.Color,i,dir.ToString());
+                                result.Add(g);
                             }
                         }
                         break;
