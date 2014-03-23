@@ -15,7 +15,7 @@ namespace RushHour
             State entry = new State();
             entry.Traffic = new TrafficGrid();
 
-            Console.WriteLine("Which board should i load? (1,2,3,4,5)");
+            Console.WriteLine("Which board should i load? (0,1,2,3,4,5)");
             var response = Console.ReadLine();
             int board = -1;
             try
@@ -44,7 +44,7 @@ namespace RushHour
 	        }
 
             entry.Parent = null;
-            Console.WriteLine("Breadth first ('B') or depth first (D)?");
+            Console.WriteLine("Breadth first ('B') or depth first ('D')?");
             Solver solver = new Solver();
             switch (Console.ReadLine().ToUpper())
 	        {
@@ -53,14 +53,14 @@ namespace RushHour
                     Console.WriteLine(entry.Traffic.PrintGrid());
                     Console.WriteLine("_______________________________\n");                   
                     solver.DFSolve(entry);
-                    solver.DFSolve(entry, "./output.txt");
+                    //solver.DFSolve(entry, "./output.txt");
                     break;
                 case "B":
                     Console.WriteLine("STARTING FROM");
                     Console.WriteLine(entry.Traffic.PrintGrid());
                     Console.WriteLine("_______________________________\n");
                     solver.BFSolve(entry);
-                    solver.BFSolve(entry, "./output.txt");
+                    //solver.BFSolve(entry, "./output.txt");
                     break;
 		        default:
                     break;
@@ -69,10 +69,6 @@ namespace RushHour
             System.Console.ReadLine();
 
             
-        }
-
-        
-
-        
+        }      
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace RushHour
     {
         public void BFSolve(State entry)
         {
+            Stopwatch sw = new Stopwatch();
             Queue<State> stateQueue = new Queue<State>();
             Dictionary<string, State> setOfStates = new Dictionary<string, State>();
             //if(entry.Parent!=null)
             //    throw new Exception()
+            sw.Start();
             stateQueue.Enqueue(entry);
 
             while (stateQueue.Count > 0)
@@ -21,9 +24,11 @@ namespace RushHour
                 State tested = stateQueue.Dequeue();
                 if (tested.IsFinal())
                 {
+                    sw.Stop();
                     System.Console.WriteLine("WE found a solution! YES! it goes like this");
                     int steps = State.PrintRoute(tested);
                     System.Console.WriteLine("actually in {0} steps",steps);
+                    System.Console.WriteLine("Elapsed milis: {0}", sw.ElapsedMilliseconds);
                     return;
                 }
                 else
@@ -38,16 +43,19 @@ namespace RushHour
                     }
                 }
             }
-
+            sw.Stop();
             System.Console.WriteLine("Dang...unsolvable");
+            System.Console.WriteLine("Elapsed milis: {0}", sw.ElapsedMilliseconds);
         }
 
         public void BFSolve(State entry,string path)
         {
+            Stopwatch sw = new Stopwatch();
             Queue<State> stateQueue = new Queue<State>();
             Dictionary<string, State> setOfStates = new Dictionary<string, State>();
             //if(entry.Parent!=null)
             //    throw new Exception()
+            sw.Start();
             stateQueue.Enqueue(entry);
 
             while (stateQueue.Count > 0)
@@ -55,7 +63,9 @@ namespace RushHour
                 State tested = stateQueue.Dequeue();
                 if (tested.IsFinal())
                 {
+                    sw.Stop();
                     System.Console.WriteLine("WE found a solution! YES! look to the otput file for more info");
+                    System.Console.WriteLine("Elapsed milis: {0}", sw.ElapsedMilliseconds);
                     State.PrintReverseRouteToFile(tested,path);
                     return;
                 }
@@ -78,10 +88,12 @@ namespace RushHour
         //add set
         public void DFSolve(State entry)
         {
+            Stopwatch sw = new Stopwatch();
             Stack<State> stateStack = new Stack<State>();
             Dictionary<string,State> setOfStates = new Dictionary<string,State>();
             //if(entry.Parent!=null)
             //    throw new Exception()
+            sw.Start();
             stateStack.Push(entry);
 
             while (stateStack.Count > 0)
@@ -89,8 +101,10 @@ namespace RushHour
                 State tested = stateStack.Pop();
                 if (tested.IsFinal())
                 {
+                    sw.Stop();
                     System.Console.WriteLine("WE found a solution! YES! it goes like this");
                     int steps = State.PrintRoute(tested);
+                    System.Console.WriteLine("Elapsed milis: {0}", sw.ElapsedMilliseconds);
                     System.Console.WriteLine("actually in {0} steps", steps);
                     return;
                 }
@@ -107,7 +121,9 @@ namespace RushHour
                     }
                 }
             }
-
+            sw.Stop();
+            System.Console.WriteLine("Dang...unsolvable");
+            System.Console.WriteLine("Elapsed milis: {0}", sw.ElapsedMilliseconds);
             System.Console.WriteLine("Dang...unsolvable");
         }
 
