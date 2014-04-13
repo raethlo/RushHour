@@ -143,6 +143,7 @@ namespace RushHour
             }
         }
 
+        //funkcia, ktora vytvori novu konfiguraci mriezky tym,ze pohneme nejakym autom
         public TrafficGrid Move(Car car, Direction direction, int distance)
         {
             TrafficGrid result = new TrafficGrid(this);
@@ -160,12 +161,10 @@ namespace RushHour
                         case Direction.Up:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X, actualCar.Y + i] = false;
-                                //result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;                                
+                                result.Occupancy[actualCar.X, actualCar.Y + i] = false;                               
                             }
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                //result.Occupancy[actualCar.X, actualCar.Y + i] = false;
                                 result.Occupancy[actualCar.X, actualCar.Y - distance + i] = true;
                             }
                             newY -= distance;
@@ -174,11 +173,10 @@ namespace RushHour
                             for (int i = 0; i < actualCar.Length; i++)
                             {
                                 result.Occupancy[actualCar.X, actualCar.Y + i] = false;
-                                //result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
+                               
                             }
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                //result.Occupancy[actualCar.X, actualCar.Y + i] = false;
                                 result.Occupancy[actualCar.X, actualCar.Y + distance + i] = true;
                             }
                             newY += distance;
@@ -193,12 +191,10 @@ namespace RushHour
                         case Direction.Left:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X + i, actualCar.Y] = false;
-                                //result.Occupancy[actualCar.X -distance + i, actualCar.Y] = true;                               
+                                result.Occupancy[actualCar.X + i, actualCar.Y] = false;                              
                             }
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                //result.Occupancy[actualCar.X + i, actualCar.Y] = false;
                                 result.Occupancy[actualCar.X - distance + i, actualCar.Y] = true;
                             }
                             newX -= distance;
@@ -206,12 +202,10 @@ namespace RushHour
                         case Direction.Right:
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                result.Occupancy[actualCar.X+i, actualCar.Y] = false;
-                                //result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;                           
+                                result.Occupancy[actualCar.X+i, actualCar.Y] = false;                         
                             }
                             for (int i = 0; i < actualCar.Length; i++)
                             {
-                                //result.Occupancy[actualCar.X + i, actualCar.Y] = false;
                                 result.Occupancy[actualCar.X + distance + i, actualCar.Y] = true;
                             }
                             newX +=distance;
@@ -327,7 +321,7 @@ namespace RushHour
 
             List<TrafficGrid> result = new List<TrafficGrid>();
             Direction[] vert = { Direction.Up, Direction.Down };
-            Direction[] horiz = { Direction.Left, Direction.Right };
+            Direction[] horiz = { Direction.Right, Direction.Left };
 
             foreach(var car in this.Cars)
             {

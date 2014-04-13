@@ -15,13 +15,13 @@ namespace RushHour
             State entry = new State();
             entry.Traffic = new TrafficGrid();
 
-            Console.WriteLine("Which board should i load? (0,1,2,3,4,5)");
+            Console.WriteLine("Which board should i load? (0,1,2,3,4)");
             var response = Console.ReadLine();
             int board = -1;
             try
             {
                 board = int.Parse(response);
-                if (board > 5 || board < 0)
+                if (board > 4 || board < 0)
                     throw new Exception();
             }
             catch (Exception)
@@ -60,6 +60,19 @@ namespace RushHour
                     Console.WriteLine(entry.Traffic.PrintGrid());
                     Console.WriteLine("_______________________________\n");
                     solver.BFSolve(entry);
+                    //solver.BFSolve(entry, "./output.txt");
+                    break;
+                case "R":
+                    Console.WriteLine("STARTING FROM");
+                    Console.WriteLine(entry.Traffic.PrintGrid());
+                    Console.WriteLine("_______________________________\n");
+                    var res = solver.RandomWalk(entry);
+                    //State.PrintRoute(res);
+                    Console.WriteLine("Do you want to print solution on console? (Y = yes / Any = no)\n");
+                    if("Y".Equals(Console.ReadLine().ToUpper()))
+                    {
+                        State.PrintRoute(res);
+                    }
                     //solver.BFSolve(entry, "./output.txt");
                     break;
 		        default:
